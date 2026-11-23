@@ -163,7 +163,7 @@ async function processNextJob() {
     for (let addon of Object.values(addonData)) {
         let release = addon.compat.find(e => e.type == "release");
         let isReleaseIncompatible = (!release || !release.extVersion);
-        let isEsrOnlyExperiment = release && release.isExperiment && !addon.dedicatedSupportOnRelease;
+        let isEsrOnlyExperiment = release && release.isExperiment;
 
         webextensions++;
         if (isReleaseIncompatible) {

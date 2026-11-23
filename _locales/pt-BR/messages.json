@@ -15,10 +15,6 @@
         "message": "Não listado em addons.thunderbird.net",
         "description": "Used as sub text below the name of an Add-on to indicate, that the Add-on is not listed on ATN"
     },
-    "subtext_committed_to_monthly": {
-        "message": "comprometido com atualizações mensais de add-ons",
-        "description": "Used as sub text in parentheses below the name of an Add-on to indicate, that the developer will provide the required updates to keep the Add-on compatible on Thunderbird's Release Channel. Example: 'Legacy Add-on (committed to monthly add-on updates)'"
-    },
     "subtext_may_break_on_release": {
         "message": "pode se tornar incompatível sem atualizações mensais de add-ons",
         "description": "Used as sub text in parentheses below the name of an Add-on to indicate, that the developer may not be able to provide the required updates to keep the Add-on compatible on Thunderbird's Release Channel. Example: 'Legacy Add-on (may become incompatible without monthly add-on updates)'"
@@ -26,6 +22,14 @@
     "subtext_alternative": {
         "message": "Alternativa",
         "description": "Used as sub text below the name of an out-dated Add-on. Example 'Alternative: Add-on XY."
+    },
+    "subtext_experiment_with_alternative": {
+        "message": "Add-on Experiment/Legacy ($REASON$), alternativa sempre compatível sem Experiments",
+        "placeholders": {
+            "reason": {
+                "content": "$1"
+            }
+        }
     },
     "suggestion_upgrade_to_release": {
         "message":  "Você pode atualizar para o Canal de Lançamento do Thunderbird.",

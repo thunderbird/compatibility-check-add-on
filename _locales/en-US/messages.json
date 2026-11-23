@@ -15,10 +15,6 @@
         "message": "Not listed on addons.thunderbird.net",
         "description": "Used as sub text below the name of an Add-on to indicate, that the Add-on is not listed on ATN"
     },
-    "subtext_committed_to_monthly": {
-        "message": "committed to monthly add-on updates",
-        "description": "Used as sub text in parentheses below the name of an Add-on to indicate, that the developer will provide the required updates to keep the Add-on compatible on Thunderbird's Release Channel. Example: 'Legacy Add-on (committed to monthly add-on updates)'"
-    },
     "subtext_may_break_on_release": {
         "message": "may become incompatible without monthly add-on updates",
         "description": "Used as sub text in parentheses below the name of an Add-on to indicate, that the developer may not be able to provide the required updates to keep the Add-on compatible on Thunderbird's Release Channel. Example: 'Legacy Add-on (may become incompatible without monthly add-on updates)'"
@@ -26,6 +22,16 @@
     "subtext_alternative": {
         "message": "Alternative",
         "description": "Used as sub text below the name of an out-dated Add-on. Example 'Alternative: Add-on XY."
+    },
+    "subtext_experiment_with_alternative": {
+        "message": "Experiment/Legacy Add-on ($REASON$), an always compatible alternative without Experiments",
+        "placeholders": {
+            "reason": {
+                "content": "$1",
+                "example": "may become incompatible without monthly add-on updates"
+            }
+        },
+        "description": "Used as sub text below the name of an Experiment/Legacy Add-on, if there is a replacement which is a pure WebExtension. $REASON$ is the explanation why Experiments are a risk. A colon and the name of the replacement are appended. Example 'Experiment/Legacy Add-on, an always compatible alternative without Experiments: Add-on XY'."
     },
     "suggestion_upgrade_to_release": {
         "message": "You may upgrade to Thunderbird's Release Channel.",

@@ -35,7 +35,40 @@ function getDataForAddonId(id, reportData) {
   return data;
 }
 
+// An alternative which is a built-in feature (no id) or a Release-compatible
+// add-on which is not an Experiment.
+function isPureWebExtensionAlternative(alt, reportData) {
+  if (alt.name && alt.link && !alt.id) {
+    return true;
+  }
+  let release = getDataForAddonId(alt.id, reportData)?.compat.find(e => e.type == "release");
+  return !!(release?.extVersion && !release.isExperiment);
+}
+
+function buildAlternativeCell(basicNameCell, alternative, addon, labelKey, linkOnNewLine = false, substitutions = []) {
+  let target = alternative.id && alternative.link
+    ? `<a href="${alternative.link}">${alternative.name}</a>`
+    : alternative.link
+      ? `<a href="https://extension-finder.thunderbird.net/?id=${encodeURIComponent(addon.id)}&q=${encodeURIComponent(addon.name)}">${alternative.name}</a>`
+      : `${alternative.name}`;
+  return `<div style="display: flex; flex-direction: column;">
+                  ${basicNameCell}
+                  <span class="annotation">${browser.i18n.getMessage(labelKey, substitutions)}:${linkOnNewLine ? "<br>" : " "}${target}</span>
+                </div>`;
+}
+
 async function onLoad() {
+  // Open links in a Thunderbird tab instead of the external browser.
+  document.addEventListener("click", event => {
+    let link = event.target.closest("a[href^='http']");
+    if (!link) {
+      return;
+    }
+    event.preventDefault();
+    browser.tabs.create({ url: link.href });
+    window.close();
+  });
+
   // Localize.
   for (let element of document.querySelectorAll("[data-i18n]")) {
     element.textContent = browser.i18n.getMessage(element.dataset.i18n);
@@ -56,7 +89,6 @@ async function onLoad() {
 
   let tableElement = document.getElementById("compatibilityTable");
   let esrOnlyExperiments = 0;
-  let releaseExperiments = 0;
   let releaseIncompatible = 0;
   let webextensions = 0;
   let unknown = 0;
@@ -85,7 +117,7 @@ async function onLoad() {
           sortOrder += SORT_NEXT_ESR_COMPATIBLE;
         }
         if (type == "release") {
-          if (!compatEntry.isExperiment || addon.dedicatedSupportOnRelease) {
+          if (!compatEntry.isExperiment) {
             sortOrder += SORT_RELEASE_COMPATIBLE_CERTAIN;
           } else {
             sortOrder += SORT_RELEASE_COMPATIBLE_UNCERTAIN;
@@ -99,8 +131,7 @@ async function onLoad() {
 
     let release = addon.compat.find(e => e.type == "release");
     let isReleaseIncompatible = (!release || !release.extVersion);
-    let isReleaseExperiment = release && release.isExperiment && addon.dedicatedSupportOnRelease;
-    let isEsrOnlyExperiment = release && release.isExperiment && !addon.dedicatedSupportOnRelease;
+    let isEsrOnlyExperiment = release && release.isExperiment;
 
     if (isReleaseIncompatible) {
       releaseIncompatible++;
@@ -108,14 +139,6 @@ async function onLoad() {
 
     let basicNameCell = `<span class="name-span" data-i18n-disabled="${browser.i18n.getMessage("disabled")}">${addon.name}</span>`;
     let nameCell = basicNameCell;
-    if (isReleaseExperiment) {
-      releaseExperiments++;
-      nameCell = `<div style="display: flex; flex-direction: column;">
-                ${basicNameCell}
-                <span class="annotation">Experiment/Legacy Add-on (${browser.i18n.getMessage("subtext_committed_to_monthly")})</span>
-              </div>`
-    }
-
     if (isEsrOnlyExperiment) {
       esrOnlyExperiments++;
       nameCell = `<div style="display: flex; flex-direction: column;">
@@ -137,15 +160,16 @@ async function onLoad() {
       })
 
       if (alternative?.name) {
-        nameCell = `<div style="display: flex; flex-direction: column;">
-                  ${basicNameCell}
-                  <span class="annotation">${browser.i18n.getMessage("subtext_alternative")}: ${alternative.id && alternative.link
-            ? `<a href="${alternative.link}">${alternative.name}</a>`
-            : alternative.link
-              ? `<a href="https://extension-finder.thunderbird.net/?id=${encodeURIComponent(addon.id)}&q=${encodeURIComponent(addon.name)}">${alternative.name}</a>`
-              : `${alternative.name}`
-          }</span>
-                </div>`
+        nameCell = buildAlternativeCell(basicNameCell, alternative, addon, "subtext_alternative");
+      }
+    }
+
+    if (isEsrOnlyExperiment && addon.alternatives?.length > 0) {
+      // Replaces the Experiment note, if there is a pure WebExtension alternative.
+      let alternative = addon.alternatives.find(alt => alt.name && isPureWebExtensionAlternative(alt, reportData));
+      if (alternative) {
+        let reason = browser.i18n.getMessage("subtext_may_break_on_release");
+        nameCell = buildAlternativeCell(basicNameCell, alternative, addon, "subtext_experiment_with_alternative", true, [reason]);
       }
     }
 
@@ -229,18 +253,8 @@ async function onLoad() {
     webextensions > 0 &&
     !releaseIncompatible &&
     !esrOnlyExperiments &&
-    !releaseExperiments &&
     !localVersionIsRelease
   ) { // only pure WebExtensions
-    box.dataset.status = 'compatible';
-    box.textContent = `${browser.i18n.getMessage("suggestion_upgrade_to_release")}`
-  } else if (
-    webextensions > 0 &&
-    !releaseIncompatible &&
-    !esrOnlyExperiments &&
-    releaseExperiments > 0 &&
-    !localVersionIsRelease
-  ) { // only pure WebExtensions and supported Release-Experiments
     box.dataset.status = 'compatible';
     box.textContent = `${browser.i18n.getMessage("suggestion_upgrade_to_release")}`
   } else if (

@@ -11,14 +11,19 @@
     "subtext_not_listed": {
         "message": "Nicht auf addons.thunderbird.net gelistet"
     },
-    "subtext_committed_to_monthly": {
-        "message": "regelmäßige monatliche Add-on Updates wurden angekündigt"
-    },
     "subtext_may_break_on_release": {
         "message": "kann ohne regelmäßige monatliche Add-on Updates inkompatibel werden"
     },
     "subtext_alternative": {
         "message": "Alternative"
+    },
+    "subtext_experiment_with_alternative": {
+        "message": "Experiment/Legacy-Add-on ($REASON$), stets kompatible Alternative ohne Experimente",
+        "placeholders": {
+            "reason": {
+                "content": "$1"
+            }
+        }
     },
     "suggestion_upgrade_to_release": {
         "message": "Sie können auf den Release Kanal von Thunderbird upgraden."
