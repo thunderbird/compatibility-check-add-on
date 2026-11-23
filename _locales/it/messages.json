@@ -24,7 +24,7 @@
         "description": "Usato come sottotesto del nome di un Add-on obsoleto. Esempio: 'Alternativa: Add-on XY."
     },
     "subtext_experiment_with_alternative": {
-        "message": "Componente aggiuntivo Experiment/Legacy ($REASON$), alternativa sempre compatibile senza Experiment",
+        "message": "Componente aggiuntivo Experiment/Legacy ($REASON$), alternativa WebExtension moderna senza Experiment (le funzionalità possono differire)",
         "placeholders": {
             "reason": {
                 "content": "$1"

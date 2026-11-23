@@ -24,14 +24,14 @@
         "description": "Used as sub text below the name of an out-dated Add-on. Example 'Alternative: Add-on XY."
     },
     "subtext_experiment_with_alternative": {
-        "message": "Experiment/Legacy Add-on ($REASON$), an always compatible alternative without Experiments",
+        "message": "Experiment/Legacy Add-on ($REASON$), modern WebExtension alternative without Experiments (features may differ)",
         "placeholders": {
             "reason": {
                 "content": "$1",
                 "example": "may become incompatible without monthly add-on updates"
             }
         },
-        "description": "Used as sub text below the name of an Experiment/Legacy Add-on, if there is a replacement which is a pure WebExtension. $REASON$ is the explanation why Experiments are a risk. A colon and the name of the replacement are appended. Example 'Experiment/Legacy Add-on, an always compatible alternative without Experiments: Add-on XY'."
+        "description": "Used as sub text below the name of an Experiment/Legacy Add-on, if there is a replacement which is a pure WebExtension. $REASON$ is the explanation why Experiments are a risk. A colon and the name of the replacement are appended. Example 'Experiment/Legacy Add-on, modern WebExtension alternative without Experiments (features may differ): Add-on XY'."
     },
     "suggestion_upgrade_to_release": {
         "message": "You may upgrade to Thunderbird's Release Channel.",

@@ -24,7 +24,7 @@
         "description": "Used as sub text below the name of an out-dated Add-on. Example 'Alternative: Add-on XY."
     },
     "subtext_experiment_with_alternative": {
-        "message": "Experiment/レガシーアドオン ($REASON$)、Experiment を使わず常に互換性のある代替",
+        "message": "Experiment/レガシーアドオン ($REASON$)、Experiment を使わないモダンな WebExtension の代替（機能が異なる場合があります）",
         "placeholders": {
             "reason": {
                 "content": "$1"

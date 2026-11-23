@@ -18,7 +18,7 @@
         "message": "Alternative"
     },
     "subtext_experiment_with_alternative": {
-        "message": "Experiment/Legacy-Add-on ($REASON$), stets kompatible Alternative ohne Experimente",
+        "message": "Experiment/Legacy-Add-on ($REASON$), moderne WebExtension-Alternative ohne Experimente (Funktionsumfang kann abweichen)",
         "placeholders": {
             "reason": {
                 "content": "$1"

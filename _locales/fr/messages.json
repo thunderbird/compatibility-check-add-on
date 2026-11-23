@@ -24,7 +24,7 @@
         "description": "Used as sub text below the name of an out-dated Add-on. Example 'Alternative: Add-on XY."
     },
     "subtext_experiment_with_alternative": {
-        "message": "Add-on Experiment/Legacy ($REASON$), alternative toujours compatible sans Experiments",
+        "message": "Add-on Experiment/Legacy ($REASON$), alternative WebExtension moderne sans Experiments (les fonctionnalités peuvent différer)",
         "placeholders": {
             "reason": {
                 "content": "$1"
